@@ -1,10 +1,25 @@
 module "reflex_aws_ebs_encryption_by_default_deactivated" {
   source           = "git::https://github.com/cloudmitigator/reflex-engine.git//modules/cwe_lambda?ref=v0.5.4"
   rule_name        = "EBSEncryptionByDefaultDeactivated"
-  rule_description = "TODO: Provide rule description"
+  rule_description = "A Reflex Rule for enforcing EBS Volume encryption by default"
 
   event_pattern = <<PATTERN
-# TODO: Provide event pattern
+{
+  "source": [
+    "aws.ec2"
+  ],
+  "detail-type": [
+    "AWS API Call via CloudTrail"
+  ],
+  "detail": {
+    "eventSource": [
+      "ec2.amazonaws.com"
+    ],
+    "eventName": [
+      "DisableEbsEncryptionByDefault"
+    ]
+  }
+}
 PATTERN
 
   function_name   = "EBSEncryptionByDefaultDeactivated"
@@ -16,7 +31,18 @@ PATTERN
     MODE      = var.mode
   }
   custom_lambda_policy = <<EOF
-# TODO: Provide required lambda permissions policy
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:EnableEbsEncryptionByDefault"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
 EOF
 
 

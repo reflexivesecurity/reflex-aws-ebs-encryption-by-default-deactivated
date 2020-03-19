@@ -1,28 +1,23 @@
 """ Module for EBSEncryptionByDefaultDeactivated """
 
 import json
-import os
 
 import boto3
 from reflex_core import AWSRule
 
 
 class EBSEncryptionByDefaultDeactivated(AWSRule):
-    """ TODO: A description for your rule """
+    """ A Reflex Rule for enforcing EBS Volume encryption by default """
 
-    # TODO: Instantiate whatever boto3 client you'll need, if any.
-    # Example:
-    # client = boto3.client("s3")
+    client = boto3.client("ec2")
 
     def __init__(self, event):
         super().__init__(event)
 
     def extract_event_data(self, event):
         """ Extract required event data """
-        # TODO: Extract any data you need from the triggering event.
-        #
-        # Example:
-        # self.bucket_name = event["detail"]["requestParameters"]["bucketName"]
+        # No data from the event is required
+        return
 
     def resource_compliant(self):
         """
@@ -30,23 +25,21 @@ class EBSEncryptionByDefaultDeactivated(AWSRule):
 
         Return True if it is compliant, and False if it is not.
         """
-        # TODO: Implement a check for determining if the resource is compliant
+        # Since the event occurred the account configuration is no longer
+        # compliant and we need to take action.
+        return False
 
     def remediate(self):
         """
         Fix the non-compliant resource so it conforms to the rule
         """
-        # TODO (Optional): Fix the non-compliant resource. This only needs to 
-        # be implemented for rules that remediate non-compliant resources.
-        # Purely detective rules can omit this function.
+        self.client.enable_ebs_encryption_by_default()
 
     def get_remediation_message(self):
         """ Returns a message about the remediation action that occurred """
-        # TODO: Provide a human readable message describing what occured. This
-        # message is sent in all notifications.
-        #
-        # Example:
-        # return f"The S3 bucket {self.bucket_name} was unencrypted. AES-256 encryption was enabled."
+        if self.should_remediate():
+            return f"EBS Encryption by default was deactivated. It has been reactivated."
+        return f"EBS Encryption by default was deactivated."
 
 
 def lambda_handler(event, _):

@@ -1,5 +1,5 @@
 # reflex-aws-ebs-encryption-by-default-deactivated
-TODO: Write a brief description of your rule and what it does.
+A Reflex Rule for enforcing EBS Volume encryption by default
 
 ## Usage
 To use this rule either add it to your `reflex.yaml` configuration file:  
