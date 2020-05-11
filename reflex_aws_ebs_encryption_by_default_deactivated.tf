@@ -1,5 +1,5 @@
 module "reflex_aws_ebs_encryption_by_default_deactivated" {
-  source           = "git::https://github.com/cloudmitigator/reflex-engine.git//modules/cwe_lambda?ref=v0.5.7"
+  source           = "git::https://github.com/cloudmitigator/reflex-engine.git//modules/cwe_lambda?ref=v0.6.0"
   rule_name        = "EBSEncryptionByDefaultDeactivated"
   rule_description = "A Reflex Rule for enforcing EBS Volume encryption by default"
 
