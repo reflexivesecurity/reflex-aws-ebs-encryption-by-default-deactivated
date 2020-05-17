@@ -38,8 +38,8 @@ class EBSEncryptionByDefaultDeactivated(AWSRule):
     def get_remediation_message(self):
         """ Returns a message about the remediation action that occurred """
         if self.should_remediate():
-            return f"EBS Encryption by default was deactivated. It has been reactivated."
-        return f"EBS Encryption by default was deactivated."
+            return "EBS Encryption by default was deactivated. It has been reactivated."
+        return "EBS Encryption by default was deactivated."
 
 
 def lambda_handler(event, _):
