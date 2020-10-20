@@ -1,5 +1,5 @@
 module "cwe" {
-  source      = "git::https://github.com/reflexivesecurity/reflex-engine.git//modules/cwe?ref=v2.1.0"
+  source      = "git::https://github.com/reflexivesecurity/reflex-engine.git//modules/cwe?ref=v2.1.2"
   name        = "EbsEncryptionByDefaultDeactivated"
   description = "A Reflex Rule for enforcing EBS Volume encryption by default"
 
